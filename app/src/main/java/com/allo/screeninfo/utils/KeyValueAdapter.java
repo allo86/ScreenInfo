@@ -1,10 +1,12 @@
-package com.allo.screeninfo;
+package com.allo.screeninfo.utils;
 
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.allo.screeninfo.R;
 
 import java.util.List;
 

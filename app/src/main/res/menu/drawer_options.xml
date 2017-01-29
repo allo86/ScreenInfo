@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/density_fragment"
+            android:checked="true"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/option_density" />
+        <item
+            android:id="@+id/text_fragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/option_text" />
+    </group>
+
+</menu>

@@ -1,4 +1,4 @@
-package com.allo.screeninfo;
+package com.allo.screeninfo.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

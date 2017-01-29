@@ -1,26 +1,45 @@
 package com.allo.screeninfo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.allo.screeninfo.density.DensityFragment;
+import com.allo.screeninfo.text.TextFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import icepick.Icepick;
+import icepick.State;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DensityFragment.OnFragmentInteractionListener,
+        TextFragment.OnFragmentInteractionListener {
 
     private static final String TAG_LOG = MainActivity.class.getCanonicalName();
 
-    @BindView(R.id.rv_items)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    private List<ScreenInfo> items;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    @State
+    int mSelectedMenuOptionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initializeUI();
-        initializeData();
+
+        Icepick.restoreInstanceState(this, savedInstanceState);
+
+        if (savedInstanceState == null) {
+            selectDrawerItem(mNavigationView.getMenu().findItem(R.id.density_fragment));
+        } else {
+            mNavigationView.getMenu().findItem(mSelectedMenuOptionId).setChecked(true);
+        }
     }
 
     @Override
@@ -70,117 +96,85 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         Log.d(TAG_LOG, "onSaveInstanceState");
         super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
-    private void initializeUI() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-
-        items = new ArrayList<>();
-        KeyValueAdapter<ScreenInfo> adapter = new KeyValueAdapter<>(items);
-        mRecyclerView.setAdapter(adapter);
+    // `onPostCreate` called when activity start-up is complete after `onStart()`
+    // NOTE 1: Make sure to override the method with only a single `Bundle` argument
+    // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
+    // There are 2 signatures and only `onPostCreate(Bundle state)` shows the hamburger icon.
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
-    private void initializeData() {
-        items.add(screenDensity());
-        items.add(screenDensityTypeByCode());
-        items.add(screenDensityTypeByResources());
-
-        items.add(isPhone());
-        items.add(is7Tablet());
-        items.add(is10Tablet());
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private ScreenInfo screenDensity() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_density));
-        screenInfo.setValue(String.valueOf(getResources().getDisplayMetrics().density));
-        return screenInfo;
-    }
-
-    private ScreenInfo screenDensityTypeByCode() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_density_type_code));
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        switch (metrics.densityDpi) {
-            case DisplayMetrics.DENSITY_LOW:
-                screenInfo.setValue(getString(R.string.screen_density_low));
-                break;
-            case DisplayMetrics.DENSITY_MEDIUM:
-                screenInfo.setValue(getString(R.string.screen_density_medium));
-                break;
-            case DisplayMetrics.DENSITY_HIGH:
-                screenInfo.setValue(getString(R.string.screen_density_high));
-                break;
-            case DisplayMetrics.DENSITY_XHIGH:
-                screenInfo.setValue(getString(R.string.screen_density_xhigh));
-                break;
-            case DisplayMetrics.DENSITY_XXHIGH:
-                screenInfo.setValue(getString(R.string.screen_density_xxhigh));
-                break;
-            case DisplayMetrics.DENSITY_XXXHIGH:
-                screenInfo.setValue(getString(R.string.screen_density_xxxhigh));
-                break;
-            case DisplayMetrics.DENSITY_260:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_280:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_300:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_340:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_360:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_400:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            case DisplayMetrics.DENSITY_420:
-                screenInfo.setValue(getString(R.string.screen_density_tv));
-                break;
-            default:
-                screenInfo.setValue(getString(R.string.screen_density_non_reliable));
-                break;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
 
-        return screenInfo;
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private ScreenInfo screenDensityTypeByResources() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_density_type_resources));
-        screenInfo.setValue(getString(R.string.screen_density_value));
-        return screenInfo;
+
+    private void initializeUI() {
+        setSupportActionBar(mToolbar);
+
+        mNavigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
-    private ScreenInfo isPhone() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_is_phone));
-        screenInfo.setValue(getTextForBoolean(getResources().getBoolean(R.bool.is_phone)));
-        return screenInfo;
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment;
+        switch (menuItem.getItemId()) {
+            case R.id.density_fragment:
+                fragment = DensityFragment.newInstance();
+                break;
+            case R.id.text_fragment:
+                fragment = TextFragment.newInstance();
+                break;
+            default:
+                fragment = DensityFragment.newInstance();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+
+        // Close the navigation drawer
+        mDrawerLayout.closeDrawers();
     }
 
-    private ScreenInfo is7Tablet() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_is_seven_inches_tablet));
-        screenInfo.setValue(getTextForBoolean(getResources().getBoolean(R.bool.is_tablet_seven_inches)));
-        return screenInfo;
-    }
-
-    private ScreenInfo is10Tablet() {
-        ScreenInfo screenInfo = new ScreenInfo();
-        screenInfo.setKey(getString(R.string.screen_is_ten_inches_tablet));
-        screenInfo.setValue(getTextForBoolean(getResources().getBoolean(R.bool.is_tablet_ten_inches)));
-        return screenInfo;
-    }
-
-    private String getTextForBoolean(boolean item) {
-        return getString(item ? R.string.screen_yes : R.string.screen_no);
-    }
 }

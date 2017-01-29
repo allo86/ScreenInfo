@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Screen Info</string>
 
     <string name="screen_density">Screen Density</string>

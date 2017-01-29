@@ -1,4 +1,6 @@
-package com.allo.screeninfo;
+package com.allo.screeninfo.density;
+
+import com.allo.screeninfo.utils.KeyValue;
 
 /**
  * Created by ALLO on 29/1/17.

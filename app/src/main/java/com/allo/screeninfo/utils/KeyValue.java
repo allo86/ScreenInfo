@@ -1,4 +1,4 @@
-package com.allo.screeninfo;
+package com.allo.screeninfo.utils;
 
 /**
  * Created by ALLO on 29/1/17.
