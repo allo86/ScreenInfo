@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Screen Info</string>
+
+    <string name="screen_density">Screen Density</string>
+
+    <string name="screen_density_type_code">Screen Density Type (calculated by code)</string>
+    <string name="screen_density_low">ldpi</string>
+    <string name="screen_density_medium">mdpi</string>
+    <string name="screen_density_high">hdpi</string>
+    <string name="screen_density_xhigh">xhdpi</string>
+    <string name="screen_density_xxhigh">xxhdpi</string>
+    <string name="screen_density_xxxhigh">xxxxhdpi</string>
+    <string name="screen_density_tv">tvdpi</string>
+    <string name="screen_density_260">260</string>
+    <string name="screen_density_280">280</string>
+    <string name="screen_density_300">300</string>
+    <string name="screen_density_340">340</string>
+    <string name="screen_density_360">360</string>
+    <string name="screen_density_400">400</string>
+    <string name="screen_density_420">420</string>
+    <string name="screen_density_non_reliable">Non reliable</string>
+
+    <string name="screen_density_type_resources">Screen Density Type (calculated by resources)</string>
+    <string name="screen_density_value">@string/screen_density_non_reliable</string>
+
+    <string name="screen_is_phone">Is a phone?</string>
+    <string name="screen_is_seven_inches_tablet">Is a 7\" tablet?</string>
+    <string name="screen_is_ten_inches_tablet">Is a 10\" tablet?</string>
+    <string name="screen_yes">Yes</string>
+    <string name="screen_no">No</string>
+
+</resources>
