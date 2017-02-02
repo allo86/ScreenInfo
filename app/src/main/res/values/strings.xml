@@ -30,4 +30,10 @@
     <string name="screen_yes">Yes</string>
     <string name="screen_no">No</string>
 
+    <string name="text_size_default">This is a text using the default font size.</string>
+    <string name="text_size_12">This is a text using 12sp font size.</string>
+    <string name="text_size_14">This is a text using 14sp font size.</string>
+    <string name="text_size_16">This is a text using 16sp font size.</string>
+    <string name="text_size_18">This is a text using 18sp font size.</string>
+
 </resources>

@@ -175,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements DensityFragment.O
 
         // Close the navigation drawer
         mDrawerLayout.closeDrawers();
+
+        // Save selected option
+        mSelectedMenuOptionId = menuItem.getItemId();
     }
 
 }

@@ -8,4 +8,10 @@
     <bool name="is_tablet_seven_inches">false</bool>
     <bool name="is_tablet_ten_inches">false</bool>
 
+    <!-- Font sizes -->
+    <dimen name="font_size_12">12sp</dimen>
+    <dimen name="font_size_14">14sp</dimen>
+    <dimen name="font_size_16">16sp</dimen>
+    <dimen name="font_size_18">18sp</dimen>
+
 </resources>
