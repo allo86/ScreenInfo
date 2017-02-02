@@ -10,6 +10,14 @@
             android:id="@+id/text_fragment"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/option_text" />
+        <item
+            android:id="@+id/orientation_fragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/option_orientation" />
+        <item
+            android:id="@+id/size_fragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/option_size" />
     </group>
 
 </menu>

@@ -3,6 +3,8 @@
 
     <string name="option_density">Density</string>
     <string name="option_text">Text</string>
+    <string name="option_orientation">Orientation</string>
+    <string name="option_size">Sizes</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

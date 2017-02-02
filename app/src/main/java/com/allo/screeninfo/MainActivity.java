@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.allo.screeninfo.density.DensityFragment;
+import com.allo.screeninfo.orientation.OrientationFragment;
+import com.allo.screeninfo.size.SizeFragment;
 import com.allo.screeninfo.text.TextFragment;
 
 import butterknife.BindView;
@@ -23,7 +25,9 @@ import icepick.Icepick;
 import icepick.State;
 
 public class MainActivity extends AppCompatActivity implements DensityFragment.OnFragmentInteractionListener,
-        TextFragment.OnFragmentInteractionListener {
+        TextFragment.OnFragmentInteractionListener,
+        OrientationFragment.OnFragmentInteractionListener,
+        SizeFragment.OnFragmentInteractionListener {
 
     private static final String TAG_LOG = MainActivity.class.getCanonicalName();
 
@@ -158,6 +162,12 @@ public class MainActivity extends AppCompatActivity implements DensityFragment.O
                 break;
             case R.id.text_fragment:
                 fragment = TextFragment.newInstance();
+                break;
+            case R.id.orientation_fragment:
+                fragment = OrientationFragment.newInstance();
+                break;
+            case R.id.size_fragment:
+                fragment = SizeFragment.newInstance();
                 break;
             default:
                 fragment = DensityFragment.newInstance();

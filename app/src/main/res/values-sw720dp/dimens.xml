@@ -5,4 +5,6 @@
     <bool name="is_tablet_seven_inches">false</bool>
     <bool name="is_tablet_ten_inches">true</bool>
 
+    <string name="text_tablets">This is a sample text that only appears for 10\" tablets</string>
+
 </resources>

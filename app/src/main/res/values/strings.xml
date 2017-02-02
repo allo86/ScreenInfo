@@ -36,4 +36,10 @@
     <string name="text_size_16">This is a text using 16sp font size.</string>
     <string name="text_size_18">This is a text using 18sp font size.</string>
 
+    <string name="text_orientation">This is a sample text for all devices.</string>
+
+    <string name="text_100dp_height">This is a 100dp height view</string>
+    <string name="text_200dp_height">This is a 200dp height view</string>
+    <string name="text_300dp_height">This is a 300dp height view</string>
+
 </resources>
