@@ -157,6 +157,9 @@ public class DensityFragment extends BaseFragment {
             case DisplayMetrics.DENSITY_420:
                 screenInfo.setValue(getString(R.string.screen_density_420));
                 break;
+            case DisplayMetrics.DENSITY_560:
+                screenInfo.setValue(getString(R.string.screen_density_560));
+                break;
             default:
                 screenInfo.setValue(getString(R.string.screen_density_non_reliable));
                 break;

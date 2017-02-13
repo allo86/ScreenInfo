@@ -19,6 +19,7 @@
     <string name="screen_density_360">360</string>
     <string name="screen_density_400">400</string>
     <string name="screen_density_420">420</string>
+    <string name="screen_density_560">560</string>
     <string name="screen_density_non_reliable">Non reliable</string>
 
     <string name="screen_density_type_resources">Screen Density Type (calculated by resources)</string>
