@@ -3,4 +3,6 @@
 
     <string name="screen_density_value">hdpi</string>
 
+    <string name="screen_dominant_resource_value">values-hdpi</string>
+
 </resources>

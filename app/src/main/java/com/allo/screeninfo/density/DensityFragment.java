@@ -86,6 +86,8 @@ public class DensityFragment extends BaseFragment {
         items.add(isPhone());
         items.add(is7Tablet());
         items.add(is10Tablet());
+
+        items.add(screenPreferredResourceFolder());
     }
 
     @Override
@@ -198,5 +200,12 @@ public class DensityFragment extends BaseFragment {
 
     private String getTextForBoolean(boolean item) {
         return getString(item ? R.string.screen_yes : R.string.screen_no);
+    }
+
+    private ScreenInfo screenPreferredResourceFolder() {
+        ScreenInfo screenInfo = new ScreenInfo();
+        screenInfo.setKey(getString(R.string.screen_dominant_resource));
+        screenInfo.setValue(getString(R.string.screen_dominant_resource_value));
+        return screenInfo;
     }
 }
